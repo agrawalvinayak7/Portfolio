@@ -5,7 +5,7 @@ import { ArrowDown } from "lucide-react";
 import Link from "next/link";
 
 export default function Hero() {
-    const tagline = "I like making things work";
+    const tagline = "I like writing software";
 
     return (
         <section className="relative w-full h-[80vh] flex flex-col justify-center px-6 md:px-12 max-w-7xl mx-auto grained-bg">
@@ -19,14 +19,6 @@ export default function Hero() {
                     VINAYAK AGRAWAL
                 </motion.h1>
 
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                    className="text-xl md:text-2xl font-normal text-muted-foreground"
-                >
-                    Software Developer
-                </motion.h2>
 
                 <motion.div
                     initial={{ opacity: 0 }}
