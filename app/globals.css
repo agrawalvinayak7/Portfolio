@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
 
-@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-neutral-dark: var(--neutral-dark);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --muted: #989787;
+  --accent: #FF3503;
+  --neutral-dark: #252121;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  /* Muted might need adjustment in dark mode? distinct from foreground? */
+  /* Keeping muted same for now or adjust - Prompt says "Text Secondary: #989787" without distinction, but usually lighter in dark mode?
+     Wait, #989787 is a mid-gray. It should work on black too. */
+}
+
+/* Grainy texture utility */
+.grained-bg {
+  isolation: isolate;
+  position: relative;
+}
+
+.grained-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Smooth transitions for theme switch */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
+
