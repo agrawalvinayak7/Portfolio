@@ -4,17 +4,15 @@ import { motion } from "framer-motion";
 
 const skillsData = {
     "Programming Languages": ["TypeScript", "JavaScript", "Python", "C++"],
-    "Frontend & Frameworks": ["React", "Next.js"],
-    "Backend & APIs": ["Node.js", "REST APIs", "Python Backend (uvicorn, FastAPI)"],
+    "Frontend & Frameworks": ["React", "Next.js", "Tailwind CSS", "Shadcn UI", "Framer Motion"],
+    "Backend & APIs": ["Node.js", "REST APIs", "PyTorch", "FastAPI", "uvicorn"],
     "AI/ML & Generative AI": [
         "AWS (Model hosting)",
         "Sentiment Analysis",
-        "LLMs",
         "Hugging Face"
     ],
-    "Databases": ["PostgreSQL", "SQLite", "Supabase"],
-    "Cloud & DevOps": ["Vercel", "AWS", "Git & GitHub", "Turborepo"],
-    "Tools & Libraries": ["Tailwind CSS", "Prisma ORM", "Zod", "FFmpeg & OpenCV"],
+    "Databases": ["PostgreSQL", "SQLite", "Supabase", "MongoDB"],
+    "Cloud & DevOps": ["Vercel", "AWS", "Git & GitHub", "Turborepo"]
 };
 
 export default function Skills() {
