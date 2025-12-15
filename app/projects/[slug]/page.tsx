@@ -122,6 +122,17 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                                 <Github className="w-4 h-4" />
                             </a>
                         )}
+                        {project.links.live && (
+                            <a
+                                href={project.links.live}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full py-4 border border-neutral-200 dark:border-neutral-800 font-medium rounded-lg hover:border-accent hover:text-accent transition-all flex items-center justify-center gap-2"
+                            >
+                                View Live
+                                <ExternalLink className="w-4 h-4" />
+                            </a>
+                        )}
                     </div>
 
                     {/* Tech Stack */}

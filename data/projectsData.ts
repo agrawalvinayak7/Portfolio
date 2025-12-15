@@ -55,8 +55,9 @@ export const projects: Project[] = [
         metrics: ["Trained on 10k samples"],
         links: {
             github: "https://github.com/agrawalvinayak7/Multimodel.git",
+            live: "https://multimodel-omega.vercel.app/",
         },
-        thumbnail: "/images/multimodal-thumb.jpg",
+        thumbnail: "/images/favicon.png",
     },
     {
         id: "2",
