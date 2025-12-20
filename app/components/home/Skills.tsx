@@ -5,12 +5,8 @@ import { motion } from "framer-motion";
 const skillsData = {
     "Programming Languages": ["TypeScript", "JavaScript", "Python", "C++"],
     "Frontend & Frameworks": ["React", "Next.js", "Tailwind CSS", "Shadcn UI", "Framer Motion"],
-    "Backend & APIs": ["Node.js", "REST APIs", "PyTorch", "FastAPI", "uvicorn"],
-    "AI/ML & Generative AI": [
-        "AWS (Model hosting)",
-        "Sentiment Analysis",
-        "Hugging Face"
-    ],
+    "Backend": ["Node.js", "Express.js", "PyTorch", "FastAPI", "uvicorn", "Next.js"],
+    "AI/ML & Generative AI": ["AWS (Model hosting)", "Sentiment Analysis", "Hugging Face"],
     "Databases": ["PostgreSQL", "SQLite", "Supabase", "MongoDB"],
     "Cloud & DevOps": ["Vercel", "AWS", "Git & GitHub", "Turborepo"]
 };
