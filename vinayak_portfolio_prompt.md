@@ -887,5 +887,4 @@ The portfolio is considered complete and successful when:
 Build this portfolio website with **precision, care, and attention to detail**. Every decision should be intentional. Every line of code should be purposeful. The result should be a **fast, accessible, beautiful portfolio** that showcases Vinayak's work professionally and effectively.
 
 Take your time. Double-check your work. Build something you'd be proud to show.
-
-**Good luck, and build something great
+**Good luck, and build something great**

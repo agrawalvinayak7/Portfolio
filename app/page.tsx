@@ -8,13 +8,11 @@ import SnowfallWrapper from "./components/SnowfallWrapper";
 export default function Home() {
   return (
     <main className="min-h-screen w-full overflow-x-hidden">
-      <SnowfallWrapper>
         <Hero />
         <Skills />
         <Projects />
         <About />
         <Contact />
-      </SnowfallWrapper>
     </main>
   );
 }
