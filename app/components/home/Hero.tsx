@@ -20,15 +20,20 @@ export default function Hero() {
                     transition={{ duration: 1, ease: "easeOut" }}
                     className="absolute inset-0 bg-canton"
                     style={{
-                        clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0% 100%)",
-                        WebkitClipPath: "polygon(15% 0, 100% 0, 100% 100%, 0% 100%)",
-                        willChange: "clip-path, transform",
-                        transform: "translateZ(0)"
+                        clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0% 100%)"
                     }}
                 >
                     {/* Animated subtle gradient overlay on canton */}
-                    <div
-                        className="absolute inset-0 animate-subtle-pulse"
+                    <motion.div
+                        animate={{
+                            opacity: [0.3, 0.5, 0.3],
+                        }}
+                        transition={{
+                            duration: 8,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                        }}
+                        className="absolute inset-0"
                         style={{
                             background: "radial-gradient(circle at 30% 50%, rgba(102, 155, 188, 0.2) 0%, transparent 50%)"
                         }}
@@ -73,10 +78,9 @@ export default function Hero() {
                         </motion.h1>
 
                         <motion.div
-                            initial={{ scaleX: 0 }}
-                            animate={{ scaleX: 1 }}
+                            initial={{ width: 0 }}
+                            animate={{ width: "120px" }}
                             transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-                            style={{ width: "120px", originX: 0 }}
                             className="h-1.5 bg-accent mb-8 dark:hidden"
                         />
 
@@ -113,9 +117,13 @@ export default function Hero() {
                     href="#projects"
                     className="flex items-center gap-3 text-sm font-medium text-muted hover:text-accent transition-colors group"
                 >
-                    <div className="text-accent animate-smooth-rotate">
+                    <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="text-accent"
+                    >
                         <Star className="w-4 h-4 fill-current" />
-                    </div>
+                    </motion.div>
                     <span className="relative">
                         Scroll to explore
                         <motion.span
@@ -125,9 +133,13 @@ export default function Hero() {
                             transition={{ duration: 0.3 }}
                         />
                     </span>
-                    <div className="group-hover:text-accent animate-gentle-bounce">
+                    <motion.div
+                        animate={{ y: [0, 8, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="group-hover:text-accent"
+                    >
                         <ArrowDown className="w-4 h-4" />
-                    </div>
+                    </motion.div>
                 </Link>
             </motion.div>
 

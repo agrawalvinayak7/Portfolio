@@ -158,38 +158,6 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Performance-optimized CSS animations for WebKit browsers */
-
-/* Gentle opacity pulse for gradient overlays */
-@keyframes subtle-pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.5; }
-}
-
-.animate-subtle-pulse {
-  animation: subtle-pulse 8s ease-in-out infinite;
-}
-
-/* Smooth rotation for stars */
-@keyframes smooth-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.animate-smooth-rotate {
-  animation: smooth-rotate 20s linear infinite;
-}
-
-/* Gentle bounce for scroll indicator */
-@keyframes gentle-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
-}
-
-.animate-gentle-bounce {
-  animation: gentle-bounce 1.5s ease-in-out infinite;
-}
-
 /* Typography Defaults */
 h1,
 h2,
