@@ -4,7 +4,7 @@ import { Project } from "@/data/projectsData";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function ProjectItem({ project }: { project: Project }) {
@@ -26,7 +26,8 @@ export function ProjectItem({ project }: { project: Project }) {
             {/* Left Side */}
             <div className="flex flex-col items-start order-2 md:order-1 z-20 pointer-events-none md:pointer-events-auto">
                 <div className="flex items-center gap-3 mb-4">
-                    <span className="text-accent text-sm font-medium font-mono">
+                    <span className="text-accent text-sm font-medium font-mono flex items-center gap-1">
+                        <Star className="w-3 h-3 fill-current" />
                         {project.number}
                     </span>
                     {project.status === "ongoing" && (
@@ -36,10 +37,10 @@ export function ProjectItem({ project }: { project: Project }) {
                     )}
                 </div>
 
-                <h3 className="text-3xl md:text-5xl font-bold font-display mb-6 group-hover:text-accent transition-colors duration-300">
+                <h3 className="text-3xl md:text-5xl font-bold font-display mb-6 text-foreground group-hover:text-accent transition-colors duration-300">
                     {project.title}
                 </h3>
-                <p className="text-muted-foreground text-base md:text-lg mb-8 leading-relaxed">
+                <p className="text-muted text-base md:text-lg mb-8 leading-relaxed">
                     {project.shortDescription}
                 </p>
 
@@ -47,7 +48,20 @@ export function ProjectItem({ project }: { project: Project }) {
                     {stack.map((tech) => (
                         <span
                             key={tech}
-                            className="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 rounded-full text-xs md:text-sm font-medium text-muted-foreground whitespace-nowrap"
+                            className="px-3 py-1 rounded-full text-xs md:text-sm font-medium whitespace-nowrap border dark:bg-neutral-800 dark:border-neutral-700"
+                            style={{
+                                backgroundColor: '#ffffff',
+                                borderColor: '#e5e7eb',
+                                color: '#003049',
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.borderColor = '#C1121F';
+                                e.currentTarget.style.backgroundColor = '#FFF5F5';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = '#e5e7eb';
+                                e.currentTarget.style.backgroundColor = '#ffffff';
+                            }}
                         >
                             {tech}
                         </span>
@@ -59,8 +73,13 @@ export function ProjectItem({ project }: { project: Project }) {
                 </div>
             </div>
 
-            {/* Right Side - Image */}
-            <div className="order-1 md:order-2 relative aspect-4/3 w-full overflow-hidden rounded-lg bg-neutral-200 dark:bg-neutral-800">
+            {/* Right Side - Image with Canton Border */}
+            <div className="order-1 md:order-2 relative aspect-4/3 w-full overflow-hidden rounded-lg dark:hidden">
+                {/* Canton-style top border */}
+                <div className="absolute top-0 left-0 right-0 h-2 bg-canton z-10" />
+                {/* Red accent stripe */}
+                <div className="absolute top-2 left-0 right-0 h-1 bg-accent z-10" />
+
                 <Image
                     src={project.thumbnail}
                     alt={project.title}
@@ -68,7 +87,22 @@ export function ProjectItem({ project }: { project: Project }) {
                     className={cn(
                         "object-cover transition-all duration-500",
                         "grayscale group-hover:grayscale-0 group-hover:scale-105",
-                        "border-2 border-transparent group-hover:border-accent/50 rounded-lg" // Border effect on prompt? "Border: 0px -> 2px solid #FF3503".
+                        "border-2 border-neutral-200 group-hover:border-canton/50 rounded-lg"
+                    )}
+                />
+                <div className="absolute inset-0 bg-neutral-900/5 group-hover:bg-transparent transition-colors duration-300" />
+            </div>
+
+            {/* Dark mode image */}
+            <div className="order-1 md:order-2 relative aspect-4/3 w-full overflow-hidden rounded-lg bg-neutral-200 dark:bg-neutral-800 hidden dark:block">
+                <Image
+                    src={project.thumbnail}
+                    alt={project.title}
+                    fill
+                    className={cn(
+                        "object-cover transition-all duration-500",
+                        "grayscale group-hover:grayscale-0 group-hover:scale-105",
+                        "border-2 border-transparent group-hover:border-accent/50 rounded-lg"
                     )}
                 />
                 <div className="absolute inset-0 bg-neutral-900/10 dark:bg-neutral-900/20 group-hover:bg-transparent transition-colors duration-300" />
