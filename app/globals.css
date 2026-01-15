@@ -9,43 +9,185 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-neutral-dark: var(--neutral-dark);
+  --color-canton: var(--canton);
+  --color-cream: var(--cream);
+  --color-flag-red: var(--flag-red);
+  --color-flag-red-dark: var(--flag-red-dark);
+  --color-flag-blue: var(--flag-blue);
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
-  --muted: #989787;
-  --accent: #FF3503;
-  --neutral-dark: #252121;
+  --background: #FDF0D5;
+  --foreground: #003049;
+  --muted: #669BBC;
+  --accent: #C1121F;
+  --neutral-dark: #780000;
+
+  /* US Flag Inspired Colors */
+  --canton: #003049;
+  --cream: #FDF0D5;
+  --flag-red: #C1121F;
+  --flag-red-dark: #780000;
+  --flag-blue: #003049;
+  --flag-blue-light: #669BBC;
 }
 
 .dark {
   --background: #000000;
   --foreground: #ffffff;
-  /* Muted might need adjustment in dark mode? distinct from foreground? */
-  /* Keeping muted same for now or adjust - Prompt says "Text Secondary: #989787" without distinction, but usually lighter in dark mode?
-     Wait, #989787 is a mid-gray. It should work on black too. */
 }
 
-/* Grainy texture utility */
-.grained-bg {
-  isolation: isolate;
+/* US Flag Inspired Utilities */
+
+/* Star Pattern Background */
+.star-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5l2.5 7.5h8l-6.5 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6.5-4.5h8z' fill='%23003049' fill-opacity='0.03'/%3E%3C/svg%3E");
+}
+
+.star-pattern-dark {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5l2.5 7.5h8l-6.5 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6.5-4.5h8z' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* Canton Stripe (Navigation Bottom Border) */
+.canton-stripe {
+  border-bottom: 4px solid var(--canton);
+}
+
+/* Accent Lines - Red and Blue Stripes */
+.accent-line-red {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--flag-red), transparent);
+}
+
+.accent-line-blue {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--canton), transparent);
+}
+
+/* Section Divider with Star */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--flag-red), transparent);
+}
+
+.section-divider-star {
+  width: 20px;
+  height: 20px;
+  fill: var(--flag-red);
+  flex-shrink: 0;
+}
+
+/* Star List Markers */
+.star-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.star-list li {
   position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.grained-bg::before {
-  content: "";
+.star-list li::before {
+  content: '⭐';
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  opacity: 0.04;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  left: 0;
+  font-size: 0.875rem;
+  color: var(--flag-red);
+}
+
+/* Canton Card Style */
+.canton-card {
+  position: relative;
+  background: var(--cream);
+  border: 2px solid var(--canton);
+  overflow: hidden;
+}
+
+.canton-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: var(--flag-red);
+}
+
+/* Stripe Button */
+.btn-stripe {
+  position: relative;
+  overflow: hidden;
+  background: var(--canton);
+  color: var(--cream);
+  transition: all 0.3s ease;
+}
+
+.btn-stripe::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  background: var(--flag-red);
+  transition: left 0.3s ease;
+}
+
+.btn-stripe:hover::before {
+  left: 0;
+}
+
+.btn-stripe:hover {
+  background: var(--flag-red);
 }
 
 /* Smooth transitions for theme switch */
 body {
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Performance-optimized CSS animations for WebKit browsers */
+
+/* Gentle opacity pulse for gradient overlays */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+}
+
+.animate-subtle-pulse {
+  animation: subtle-pulse 8s ease-in-out infinite;
+}
+
+/* Smooth rotation for stars */
+@keyframes smooth-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-smooth-rotate {
+  animation: smooth-rotate 20s linear infinite;
+}
+
+/* Gentle bounce for scroll indicator */
+@keyframes gentle-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.animate-gentle-bounce {
+  animation: gentle-bounce 1.5s ease-in-out infinite;
 }
 
 /* Typography Defaults */
