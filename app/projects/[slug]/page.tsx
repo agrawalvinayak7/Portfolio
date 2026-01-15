@@ -27,7 +27,7 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
             {/* Navigation */}
             <Link
                 href="/#projects"
-                className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors mb-12 group"
+                className="inline-flex items-center gap-2 text-muted hover:text-accent transition-colors mb-12 group"
             >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 Back to Projects
@@ -37,19 +37,19 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
             <div className="mb-16">
                 <div className="flex items-center gap-4 mb-6">
                     <span className="text-accent font-mono font-medium">{project.number}</span>
-                    <span className="px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-800 text-xs font-medium uppercase tracking-wide">
+                    <span className="px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-800 text-xs font-medium uppercase tracking-wide bg-white dark:bg-neutral-900">
                         {project.status === "completed" ? `Completed ${project.year}` : "In Development"}
                     </span>
                 </div>
 
                 <h1 className="text-4xl md:text-6xl font-bold font-display mb-6">{project.title}</h1>
-                <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl leading-relaxed">
+                <p className="text-xl md:text-2xl text-muted max-w-3xl leading-relaxed">
                     {project.shortDescription}
                 </p>
             </div>
 
             {/* Hero Image */}
-            <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 mb-20 border border-neutral-200 dark:border-neutral-800">
+            <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-white dark:bg-neutral-900 mb-20 border border-neutral-200 dark:border-neutral-800">
                 <Image
                     src={project.thumbnail}
                     alt={project.title}
@@ -65,7 +65,7 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                 <div className="lg:col-span-2 space-y-16">
                     <section>
                         <h2 className="text-2xl font-bold font-display mb-6">Overview</h2>
-                        <p className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line">
+                        <p className="text-lg text-muted leading-relaxed whitespace-pre-line">
                             {project.longDescription}
                         </p>
                     </section>
@@ -76,7 +76,7 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                             {project.features.map((feature, idx) => (
                                 <li key={idx} className="flex gap-4 items-start">
                                     <div className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
-                                    <span className="text-muted-foreground">{feature}</span>
+                                    <span className="text-muted">{feature}</span>
                                 </li>
                             ))}
                         </ul>
@@ -87,7 +87,7 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                             <h2 className="text-2xl font-bold font-display mb-6">Impact & Metrics</h2>
                             <div className="flex flex-wrap gap-4">
                                 {project.metrics.map((metric, idx) => (
-                                    <div key={idx} className="p-6 bg-neutral-50 dark:bg-neutral-900 rounded-lg border border-neutral-100 dark:border-neutral-800">
+                                    <div key={idx} className="p-6 bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800" style={{ boxShadow: "0 1px 3px rgba(0, 48, 73, 0.1)" }}>
                                         <span className="text-lg font-medium">{metric}</span>
                                     </div>
                                 ))}
@@ -116,7 +116,7 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                                 href={project.links.github}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-full py-4 border border-neutral-200 dark:border-neutral-800 font-medium rounded-lg hover:border-accent hover:text-accent transition-all flex items-center justify-center gap-2"
+                                className="w-full py-4 border border-neutral-200 dark:border-neutral-800 font-medium rounded-lg hover:border-accent hover:text-accent transition-all flex items-center justify-center gap-2 bg-white dark:bg-transparent"
                             >
                                 View Code
                                 <Github className="w-4 h-4" />
@@ -127,7 +127,7 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                                 href={project.links.live}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-full py-4 border border-neutral-200 dark:border-neutral-800 font-medium rounded-lg hover:border-accent hover:text-accent transition-all flex items-center justify-center gap-2"
+                                className="w-full py-4 border border-neutral-200 dark:border-neutral-800 font-medium rounded-lg hover:border-accent hover:text-accent transition-all flex items-center justify-center gap-2 bg-white dark:bg-transparent"
                             >
                                 View Live
                                 <ExternalLink className="w-4 h-4" />
@@ -137,7 +137,7 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
 
                     {/* Tech Stack */}
                     <div>
-                        <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-6">Technologies</h3>
+                        <h3 className="text-sm font-bold uppercase tracking-wider text-muted mb-6">Technologies</h3>
 
                         <div className="space-y-6">
                             {project.techStack.frontend && (
@@ -145,7 +145,18 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                                     <div className="text-xs font-semibold mb-2 opacity-50">FRONTEND</div>
                                     <div className="flex flex-wrap gap-2">
                                         {project.techStack.frontend.map(t => (
-                                            <span key={t} className="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 rounded text-sm">{t}</span>
+                                            <span
+                                                key={t}
+                                                className="px-3 py-1 rounded text-sm border dark:bg-neutral-800 dark:border-neutral-700"
+                                                style={{
+                                                    backgroundColor: '#ffffff',
+                                                    borderColor: '#e5e7eb',
+                                                    color: '#003049',
+                                                    boxShadow: '0 1px 3px rgba(0, 48, 73, 0.1)'
+                                                }}
+                                            >
+                                                {t}
+                                            </span>
                                         ))}
                                     </div>
                                 </div>
@@ -155,7 +166,18 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                                     <div className="text-xs font-semibold mb-2 opacity-50">BACKEND</div>
                                     <div className="flex flex-wrap gap-2">
                                         {project.techStack.backend.map(t => (
-                                            <span key={t} className="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 rounded text-sm">{t}</span>
+                                            <span
+                                                key={t}
+                                                className="px-3 py-1 rounded text-sm border dark:bg-neutral-800 dark:border-neutral-700"
+                                                style={{
+                                                    backgroundColor: '#ffffff',
+                                                    borderColor: '#e5e7eb',
+                                                    color: '#003049',
+                                                    boxShadow: '0 1px 3px rgba(0, 48, 73, 0.1)'
+                                                }}
+                                            >
+                                                {t}
+                                            </span>
                                         ))}
                                     </div>
                                 </div>
@@ -165,7 +187,18 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                                     <div className="text-xs font-semibold mb-2 opacity-50">AI / ML</div>
                                     <div className="flex flex-wrap gap-2">
                                         {project.techStack.aiml.map(t => (
-                                            <span key={t} className="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 rounded text-sm">{t}</span>
+                                            <span
+                                                key={t}
+                                                className="px-3 py-1 rounded text-sm border dark:bg-neutral-800 dark:border-neutral-700"
+                                                style={{
+                                                    backgroundColor: '#ffffff',
+                                                    borderColor: '#e5e7eb',
+                                                    color: '#003049',
+                                                    boxShadow: '0 1px 3px rgba(0, 48, 73, 0.1)'
+                                                }}
+                                            >
+                                                {t}
+                                            </span>
                                         ))}
                                     </div>
                                 </div>
@@ -178,14 +211,14 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
             {/* Project Navigation */}
             <div className="border-t border-neutral-200 dark:border-neutral-800 pt-12 flex justify-between items-center">
                 <Link href={`/projects/${prevProject.slug}`} className="group flex flex-col items-start gap-1">
-                    <span className="text-sm text-muted-foreground flex items-center gap-2 group-hover:text-accent transition-colors">
+                    <span className="text-sm text-muted flex items-center gap-2 group-hover:text-accent transition-colors">
                         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Previous
                     </span>
                     <span className="text-xl font-bold font-display">{prevProject.title}</span>
                 </Link>
 
                 <Link href={`/projects/${nextProject.slug}`} className="group flex flex-col items-end gap-1 text-right">
-                    <span className="text-sm text-muted-foreground flex items-center gap-2 group-hover:text-accent transition-colors">
+                    <span className="text-sm text-muted flex items-center gap-2 group-hover:text-accent transition-colors">
                         Next <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </span>
                     <span className="text-xl font-bold font-display">{nextProject.title}</span>
