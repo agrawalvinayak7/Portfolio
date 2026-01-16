@@ -107,6 +107,12 @@
   color: var(--flag-red);
 }
 
+/* Canton Geometric Shape - Cross-browser clip-path */
+.canton-shape {
+  -webkit-clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
 /* Canton Card Style */
 .canton-card {
   position: relative;

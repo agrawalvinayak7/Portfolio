@@ -18,9 +18,9 @@ export default function Hero() {
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 1, ease: "easeOut" }}
-                    className="absolute inset-0 bg-canton"
+                    className="absolute inset-0 canton-shape"
                     style={{
-                        clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0% 100%)"
+                        backgroundColor: "#003049"
                     }}
                 >
                     {/* Animated subtle gradient overlay on canton */}
