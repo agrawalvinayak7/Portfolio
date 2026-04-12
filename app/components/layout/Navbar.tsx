@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useScroll, motion, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import { Moon, Sun, Menu, X, FileText } from "lucide-react";
+import { Moon, Sun, Menu, X, ArrowUpRight } from "lucide-react";
 import { useTheme } from "next-themes";
-import { cn } from "@/lib/utils";
 
 export default function Navbar() {
     const { scrollY } = useScroll();
     const [hidden, setHidden] = useState(false);
     const [prevScroll, setPrevScroll] = useState(0);
+    const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
@@ -23,13 +23,26 @@ export default function Navbar() {
         } else {
             setHidden(false);
         }
+        setScrolled(latest > 50);
         setPrevScroll(latest);
     });
 
+    const smoothScroll = useCallback((e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+        e.preventDefault();
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+            window.history.pushState(null, "", `#${id}`);
+        }
+        setMobileMenuOpen(false);
+    }, []);
+
     const links = [
-        { name: "About", href: "/#about" },
-        { name: "Projects", href: "/#projects" },
-        { name: "Contact", href: "/#contact" },
+        { name: "Projects", id: "projects", number: "01" },
+        { name: "Stack", id: "stack", number: "02" },
+        { name: "About", id: "about", number: "03" },
+        { name: "Writing", id: "writing", number: "04" },
+        { name: "Contact", id: "contact", number: "05" },
     ];
 
     return (
@@ -40,79 +53,89 @@ export default function Navbar() {
             }}
             animate={hidden ? "hidden" : "visible"}
             transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md canton-stripe"
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+                scrolled
+                    ? "bg-background/90 backdrop-blur-lg border-b border-border shadow-[0_1px_10px_rgba(0,0,0,0.04)]"
+                    : "bg-transparent border-b border-transparent"
+            }`}
         >
-            <div className="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
                 {/* Logo */}
                 <Link
                     href="/"
-                    className="text-2xl font-bold tracking-tighter font-display hover:text-accent transition-colors"
-                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-xl font-display italic text-foreground hover:text-accent transition-colors duration-300"
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 >
-                    VA
+                    VA<span className="text-accent">.</span>
                 </Link>
 
                 {/* Desktop Nav */}
                 <div className="hidden md:flex items-center gap-8">
                     {links.map((link) => (
-                        <Link
+                        <a
                             key={link.name}
-                            href={link.href}
-                            className="text-sm font-medium text-foreground hover:text-accent transition-colors relative group"
+                            href={`#${link.id}`}
+                            onClick={(e) => smoothScroll(e, link.id)}
+                            className="group flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.15em] text-foreground-secondary hover:text-accent transition-colors duration-300 cursor-pointer"
                         >
+                            <span className="text-[9px] text-muted group-hover:text-accent transition-colors font-mono">
+                                {link.number}
+                            </span>
                             {link.name}
-                            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
-                        </Link>
+                        </a>
                     ))}
 
-                    {/* Dark Mode Toggle */}
+                    {/* Divider */}
+                    <div className="w-[1px] h-4 bg-border" />
+
+                    {/* Theme Toggle */}
                     <button
                         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                        className="p-2 rounded-full hover:bg-neutral-200/50 dark:hover:bg-neutral-800 transition-colors"
-                        aria-label="Toggle dark mode"
+                        className="p-1.5 rounded-full border border-border hover:border-accent hover:text-accent transition-all duration-300"
+                        aria-label="Toggle theme"
                     >
                         {mounted && theme === "dark" ? (
-                            <Sun className="w-5 h-5" />
+                            <Sun className="w-3.5 h-3.5" />
                         ) : (
-                            <Moon className="w-5 h-5" />
+                            <Moon className="w-3.5 h-3.5" />
                         )}
                     </button>
 
-                    {/* Resume Button */}
+                    {/* Resume Link */}
                     <a
                         href="/Vinayak_Agrawal_Resume.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-5 py-2.5 bg-canton text-background text-sm font-medium rounded-full hover:bg-accent hover:text-white transition-all transform hover:scale-105 btn-stripe"
+                        className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-accent border border-accent/30 rounded-full hover:bg-accent hover:text-background transition-all duration-300"
                     >
-                        <FileText className="w-4 h-4" />
-                        View CV
+                        Resume
+                        <ArrowUpRight className="w-3 h-3" />
                     </a>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <div className="flex md:hidden items-center gap-4">
+                {/* Mobile Controls */}
+                <div className="flex md:hidden items-center gap-3">
                     <button
                         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                        className="p-2 rounded-full hover:bg-neutral-200/50 dark:hover:bg-neutral-800 transition-colors"
-                        aria-label="Toggle dark mode"
+                        className="p-1.5 rounded-full border border-border hover:border-accent transition-colors duration-300"
+                        aria-label="Toggle theme"
                     >
                         {mounted && theme === "dark" ? (
-                            <Sun className="w-5 h-5" />
+                            <Sun className="w-3.5 h-3.5" />
                         ) : (
-                            <Moon className="w-5 h-5" />
+                            <Moon className="w-3.5 h-3.5" />
                         )}
                     </button>
 
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="p-2 z-50 relative text-foreground"
+                        className="p-1.5 z-50 relative text-foreground"
                         aria-label="Toggle menu"
                     >
                         {mobileMenuOpen ? (
-                            <X className="w-6 h-6" />
+                            <X className="w-5 h-5" />
                         ) : (
-                            <Menu className="w-6 h-6" />
+                            <Menu className="w-5 h-5" />
                         )}
                     </button>
                 </div>
@@ -126,28 +149,49 @@ export default function Navbar() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: "100%" }}
                         transition={{ type: "tween", duration: 0.3 }}
-                        className="fixed inset-0 top-0 bg-background z-40 flex flex-col items-center justify-center gap-8 md:hidden canton-stripe border-t-4"
+                        className="fixed inset-0 top-0 bg-background z-40 flex flex-col items-start justify-center px-10 gap-6 md:hidden"
                     >
-                        {links.map((link) => (
-                            <Link
+                        {/* Decorative ghost text in mobile menu */}
+                        <div className="absolute right-6 top-[15%] ghost-text select-none" style={{ fontSize: "8rem" }} aria-hidden="true">
+                            &rarr;
+                        </div>
+
+                        {links.map((link, i) => (
+                            <motion.div
                                 key={link.name}
-                                href={link.href}
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="text-3xl font-bold font-display text-foreground hover:text-accent transition-colors"
+                                initial={{ opacity: 0, x: 40 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.1 + i * 0.05, duration: 0.3 }}
                             >
-                                {link.name}
-                            </Link>
+                                <a
+                                    href={`#${link.id}`}
+                                    onClick={(e) => smoothScroll(e, link.id)}
+                                    className="flex items-baseline gap-4 group cursor-pointer"
+                                >
+                                    <span className="mono-label text-accent">{link.number}</span>
+                                    <span className="text-4xl font-display italic text-foreground group-hover:text-accent transition-colors duration-300">
+                                        {link.name}
+                                    </span>
+                                </a>
+                            </motion.div>
                         ))}
 
-                        <a
-                            href="/Vinayak_Agrawal_Resume.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-4 flex items-center gap-2 px-6 py-3 bg-canton text-background text-lg font-medium rounded-full hover:bg-accent hover:text-white transition-all btn-stripe"
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.4 }}
+                            className="mt-8 pt-6 border-t border-border w-full"
                         >
-                            <FileText className="w-5 h-5" />
-                            View CV
-                        </a>
+                            <a
+                                href="/Vinayak_Agrawal_Resume.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-5 py-2 text-sm font-medium uppercase tracking-[0.15em] text-accent border border-accent/30 rounded-full hover:bg-accent hover:text-background transition-all duration-300"
+                            >
+                                Resume
+                                <ArrowUpRight className="w-3.5 h-3.5" />
+                            </a>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
