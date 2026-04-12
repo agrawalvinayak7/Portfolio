@@ -1,162 +1,137 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, Star } from "lucide-react";
-import Link from "next/link";
+import { ArrowDown } from "lucide-react";
 
 export default function Hero() {
-    const tagline = "I like writing software";
-
     return (
-        <section className="relative w-full h-screen overflow-hidden">
-            {/* Subtle Star Pattern Background - Light Mode Only */}
-            <div className="absolute inset-0 dark:hidden star-pattern opacity-60" />
+        <section className="relative w-full min-h-screen flex items-center overflow-hidden">
+            {/* Fine grid background */}
+            <div className="absolute inset-0 fine-grid opacity-50" />
 
-            {/* Canton (Dark Blue) - Geometric Shape */}
-            <div className="absolute right-0 top-0 w-[55%] h-full dark:hidden">
-                <motion.div
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    className="absolute inset-0 canton-shape"
-                    style={{
-                        backgroundColor: "#003049"
-                    }}
+            {/* Oversized ghost text — decorative background element */}
+            <motion.div
+                initial={{ opacity: 0, x: 80 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+                className="absolute right-[-5%] top-[10%] ghost-text select-none pointer-events-none hidden md:block"
+                style={{ fontSize: "clamp(15rem, 25vw, 30rem)" }}
+                aria-hidden="true"
+            >
+                VA
+            </motion.div>
+
+            {/* Floating accent line — vertical decorative */}
+            <motion.div
+                initial={{ height: 0 }}
+                animate={{ height: "120px" }}
+                transition={{ duration: 1, delay: 1, ease: "easeOut" }}
+                className="absolute left-6 md:left-12 top-[20%] w-[1px] bg-accent hidden md:block"
+            />
+
+            {/* Dot cluster — decorative */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.4 }}
+                transition={{ duration: 1.5, delay: 1.5 }}
+                className="absolute right-[15%] bottom-[20%] w-32 h-32 dot-pattern hidden lg:block"
+            />
+
+            {/* Content */}
+            <div className="relative z-10 px-6 md:px-12 max-w-7xl mx-auto w-full pt-16">
+                {/* Mono label */}
+                <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="mono-label mb-10"
                 >
-                    {/* Animated subtle gradient overlay on canton */}
-                    <motion.div
-                        animate={{
-                            opacity: [0.3, 0.5, 0.3],
-                        }}
-                        transition={{
-                            duration: 8,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                        }}
-                        className="absolute inset-0"
-                        style={{
-                            background: "radial-gradient(circle at 30% 50%, rgba(102, 155, 188, 0.2) 0%, transparent 50%)"
-                        }}
-                    />
+                    <span className="inline-block w-8 h-[1px] bg-accent mr-3 align-middle" />
+                    Software Developer &amp; Product Builder
+                </motion.p>
 
-                    {/* Subtle stars on canton */}
-                    <div className="absolute inset-0 opacity-10">
-                        {[...Array(6)].map((_, i) => (
-                            <Star
-                                key={i}
-                                className="absolute text-white"
-                                style={{
-                                    top: `${10 + i * 15}%`,
-                                    left: `${20 + (i % 3) * 20}%`,
-                                    fontSize: `${12 + (i % 2) * 8}px`,
-                                }}
-                            />
-                        ))}
-                    </div>
+                {/* Name — large editorial */}
+                <div>
+                    <motion.h1
+                        initial={{ y: "100%" }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                        className="font-display italic text-foreground leading-[0.9] tracking-[-0.03em]"
+                        style={{ fontSize: "clamp(3.5rem, 10vw, 10rem)" }}
+                    >
+                        Vinayak
+                    </motion.h1>
+                </div>
+                <div>
+                    <motion.h1
+                        initial={{ y: "100%" }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                        className="font-display italic text-foreground leading-[0.9] tracking-[-0.03em]"
+                        style={{ fontSize: "clamp(3.5rem, 10vw, 10rem)" }}
+                    >
+                        Agrawal
+                    </motion.h1>
+                </div>
+
+                {/* Accent line + year */}
+                <div className="flex items-center gap-4 mt-10">
+                    <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: "6rem" }}
+                        transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
+                        className="h-[2px] bg-accent"
+                    />
+                    <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.9 }}
+                        className="mono-label"
+                    >
+                        Portfolio 2025
+                    </motion.span>
+                </div>
+
+                {/* Tagline */}
+                <motion.p
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.9 }}
+                    className="text-lg md:text-xl text-foreground-secondary font-light mt-8 max-w-lg leading-relaxed"
+                >
+                    I build products that work.
+                    <br />
+                    <span className="text-accent font-normal">I use AI to build them faster.</span>
+                </motion.p>
+
+                {/* CTA — subtle scroll prompt */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 1.8 }}
+                    className="mt-16 flex items-center gap-3"
+                >
+                    <a href="#projects" className="flex items-center gap-3 group">
+                        <span className="mono-label group-hover:text-accent transition-colors">
+                            Explore work
+                        </span>
+                        <motion.div
+                            animate={{ y: [0, 6, 0] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                            <ArrowDown className="w-3.5 h-3.5 text-muted group-hover:text-accent transition-colors" />
+                        </motion.div>
+                    </a>
                 </motion.div>
             </div>
 
-            {/* Red Accent Stripe - Top */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-accent dark:hidden" />
-
-            {/* Red Accent Stripe - Bottom of Hero */}
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-accent dark:hidden" />
-
-            {/* Content */}
-            <div className="relative z-10 px-6 md:px-12 max-w-7xl mx-auto w-full min-h-screen pt-20 flex flex-col">
-                {/* Name and Tagline - Vertically Centered */}
-                <div className="flex-1 flex items-center">
-                    <div className="max-w-3xl">
-                        {/* Name on Cream Background */}
-                        <motion.h1
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="text-6xl md:text-[6.5rem] font-bold font-display tracking-tight leading-none text-foreground mb-6"
-                        >
-                            VINAYAK AGRAWAL
-                        </motion.h1>
-
-                        <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: "120px" }}
-                            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-                            className="h-1.5 bg-accent mb-8 dark:hidden"
-                        />
-
-                        {/* Tagline */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.8, delay: 0.7 }}
-                            className="text-xl md:text-2xl font-display font-medium text-foreground h-8"
-                        >
-                            {tagline.split("").map((char, index) => (
-                                <motion.span
-                                    key={index}
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.05, delay: 1 + index * 0.03 }}
-                                >
-                                    {char}
-                                </motion.span>
-                            ))}
-                        </motion.div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Scroll Indicator with Star - Positioned Absolutely */}
+            {/* Bottom border accent */}
             <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 2.5 }}
-                className="absolute bottom-12 left-6 md:left-12 z-10 flex items-center gap-3"
-            >
-                <Link
-                    href="#projects"
-                    className="flex items-center gap-3 text-sm font-medium text-muted hover:text-accent transition-colors group"
-                >
-                    <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="text-accent"
-                    >
-                        <Star className="w-4 h-4 fill-current" />
-                    </motion.div>
-                    <span className="relative">
-                        Scroll to explore
-                        <motion.span
-                            className="absolute bottom-0 left-0 h-0.5 bg-accent"
-                            initial={{ width: 0 }}
-                            whileHover={{ width: "100%" }}
-                            transition={{ duration: 0.3 }}
-                        />
-                    </span>
-                    <motion.div
-                        animate={{ y: [0, 8, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                        className="group-hover:text-accent"
-                    >
-                        <ArrowDown className="w-4 h-4" />
-                    </motion.div>
-                </Link>
-            </motion.div>
-
-            {/* Decorative Star on Canton - Light Mode Only */}
-            <motion.div
-                initial={{ scale: 0, rotate: -180 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{
-                    duration: 1.2,
-                    delay: 1.5,
-                    ease: "easeOut",
-                    type: "spring"
-                }}
-                className="absolute right-[20%] top-[25%] dark:hidden opacity-20"
-            >
-                <Star className="w-32 h-32 text-white fill-current" />
-            </motion.div>
-        </section >
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1.2, delay: 1.2, ease: "easeOut" }}
+                className="absolute bottom-0 left-0 right-0 h-[1px] bg-border origin-left"
+            />
+        </section>
     );
 }
