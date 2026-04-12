@@ -2,114 +2,74 @@
 
 import { Project } from "@/data/projectsData";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Star } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ArrowUpRight } from "lucide-react";
 
-export function ProjectItem({ project }: { project: Project }) {
-    // Combine tech stack for preview (limit to 5 items)
+export function ProjectItem({ project, index }: { project: Project; index: number }) {
     const stack = [
         ...(project.techStack.aiml || []),
         ...(project.techStack.frontend || []),
         ...(project.techStack.backend || []),
-    ].slice(0, 5);
+    ].slice(0, 4);
+
+    const number = String(index + 1).padStart(2, "0");
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10% 0px" }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="group relative w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
+            transition={{ duration: 0.5, delay: index * 0.05 }}
         >
-            {/* Left Side */}
-            <div className="flex flex-col items-start order-2 md:order-1 z-20 pointer-events-none md:pointer-events-auto">
-                <div className="flex items-center gap-3 mb-4">
-                    <span className="text-accent text-sm font-medium font-mono flex items-center gap-1">
-                        <Star className="w-3 h-3 fill-current" />
-                        {project.number}
-                    </span>
-                    {project.status === "ongoing" && (
-                        <span className="text-[10px] sm:text-xs px-2 py-0.5 border border-accent/50 text-accent rounded-full uppercase tracking-wider">
-                            In Development
+            <Link
+                href={`/projects/${project.slug}`}
+                className="group grid grid-cols-[1fr] md:grid-cols-[auto_1fr_auto] gap-4 md:gap-12 items-center py-8 md:py-10 border-b border-border hover:bg-accent-soft transition-colors duration-500"
+            >
+                {/* Number */}
+                <span className="hidden md:block text-6xl lg:text-7xl font-display italic text-border-strong group-hover:text-accent transition-colors duration-500 leading-none w-24">
+                    {number}
+                </span>
+
+                {/* Info */}
+                <div className="flex flex-col gap-2 min-w-0">
+                    <div className="flex items-center gap-3 flex-wrap">
+                        <span className="md:hidden text-base font-display italic text-muted">
+                            {number}
                         </span>
-                    )}
+                        <h3 className="text-2xl md:text-3xl lg:text-4xl font-display italic text-foreground group-hover:text-accent transition-colors duration-500">
+                            {project.title}
+                        </h3>
+                        {project.status === "ongoing" && (
+                            <span className="shrink-0 text-[10px] px-2.5 py-1 uppercase tracking-wider text-accent border border-accent/30 rounded-full font-mono font-medium">
+                                In Dev
+                            </span>
+                        )}
+                    </div>
+
+                    <p className="text-foreground-secondary text-sm md:text-base font-light line-clamp-1 pr-4">
+                        {project.shortDescription}
+                    </p>
+
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1">
+                        {stack.map((tech, i) => (
+                            <span key={tech} className="mono-label flex items-center gap-2">
+                                {i > 0 && <span className="w-1 h-1 rounded-full bg-border-strong" />}
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
                 </div>
 
-                <h3 className="text-3xl md:text-5xl font-bold font-display mb-6 text-foreground group-hover:text-accent transition-colors duration-300">
-                    {project.title}
-                </h3>
-                <p className="text-muted text-base md:text-lg mb-8 leading-relaxed">
-                    {project.shortDescription}
-                </p>
-
-                <div className="flex flex-wrap gap-2 mb-8">
-                    {stack.map((tech) => (
-                        <span
-                            key={tech}
-                            className="px-3 py-1 rounded-full text-xs md:text-sm font-medium whitespace-nowrap border dark:bg-neutral-800 dark:border-neutral-700"
-                            style={{
-                                backgroundColor: '#ffffff',
-                                borderColor: '#e5e7eb',
-                                color: '#003049',
-                            }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.borderColor = '#C1121F';
-                                e.currentTarget.style.backgroundColor = '#FFF5F5';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.borderColor = '#e5e7eb';
-                                e.currentTarget.style.backgroundColor = '#ffffff';
-                            }}
-                        >
-                            {tech}
-                        </span>
-                    ))}
+                {/* Arrow */}
+                <div className="hidden md:flex items-center justify-center w-12 h-12 rounded-full border border-border group-hover:border-accent group-hover:bg-accent transition-all duration-500">
+                    <ArrowUpRight className="w-4 h-4 text-muted group-hover:text-background group-hover:rotate-45 transition-all duration-500" />
                 </div>
 
-                <div className="btn-link inline-flex items-center gap-2 text-accent font-medium mt-auto transition-all group-hover:translate-x-2">
-                    View Project <ArrowRight className="w-4 h-4" />
+                {/* Mobile arrow */}
+                <div className="md:hidden absolute right-0 top-8">
+                    <ArrowUpRight className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
                 </div>
-            </div>
-
-            {/* Right Side - Image with Canton Border */}
-            <div className="order-1 md:order-2 relative aspect-4/3 w-full overflow-hidden rounded-lg dark:hidden">
-                {/* Canton-style top border */}
-                <div className="absolute top-0 left-0 right-0 h-2 bg-canton z-10" />
-                {/* Red accent stripe */}
-                <div className="absolute top-2 left-0 right-0 h-1 bg-accent z-10" />
-
-                <Image
-                    src={project.thumbnail}
-                    alt={project.title}
-                    fill
-                    className={cn(
-                        "object-cover transition-all duration-500",
-                        "grayscale group-hover:grayscale-0 group-hover:scale-105",
-                        "border-2 border-neutral-200 group-hover:border-canton/50 rounded-lg"
-                    )}
-                />
-                <div className="absolute inset-0 bg-neutral-900/5 group-hover:bg-transparent transition-colors duration-300" />
-            </div>
-
-            {/* Dark mode image */}
-            <div className="order-1 md:order-2 relative aspect-4/3 w-full overflow-hidden rounded-lg bg-neutral-200 dark:bg-neutral-800 hidden dark:block">
-                <Image
-                    src={project.thumbnail}
-                    alt={project.title}
-                    fill
-                    className={cn(
-                        "object-cover transition-all duration-500",
-                        "grayscale group-hover:grayscale-0 group-hover:scale-105",
-                        "border-2 border-transparent group-hover:border-accent/50 rounded-lg"
-                    )}
-                />
-                <div className="absolute inset-0 bg-neutral-900/10 dark:bg-neutral-900/20 group-hover:bg-transparent transition-colors duration-300" />
-            </div>
-
-            {/* Full Card Link overlay */}
-            <Link href={`/projects/${project.slug}`} className="absolute inset-0 z-10" aria-label={`View project ${project.title}`} />
+            </Link>
         </motion.div>
     );
 }

@@ -3,43 +3,61 @@
 import { projects } from "@/data/projectsData";
 import { ProjectItem } from "./ProjectItem";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
 
 export default function Projects() {
     return (
-        <section id="projects" className="py-20 md:py-32 px-6 md:px-12 max-w-7xl mx-auto relative">
-            {/* Section Divider */}
-            <div className="section-divider mb-16">
-                <Star className="section-divider-star" />
+        <section id="projects" className="relative py-24 md:py-40 px-6 md:px-12 max-w-7xl mx-auto">
+            {/* Section header */}
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+                <div>
+                    <motion.span
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                        className="mono-label mb-4 block"
+                    >
+                        <span className="inline-block w-6 h-[1px] bg-accent mr-3 align-middle" />
+                        Selected Work
+                    </motion.span>
+
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="text-5xl md:text-7xl font-display italic text-foreground"
+                    >
+                        Projects
+                    </motion.h2>
+                </div>
+
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="text-foreground-secondary text-base font-light max-w-sm"
+                >
+                    Products, systems, and experiments — built end-to-end.
+                </motion.p>
             </div>
 
-            <motion.h2
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-4xl md:text-5xl font-bold font-display mb-6 text-foreground"
-            >
-                Selected Work
-            </motion.h2>
-
-            {/* Blue Accent Line */}
+            {/* Accent rule */}
             <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: "80px" }}
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="h-1 bg-canton mb-20 dark:hidden"
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="accent-rule mb-0 origin-left"
             />
 
-            <div className="space-y-32 md:space-y-40">
-                {projects.map((project) => (
-                    <ProjectItem key={project.id} project={project} />
+            {/* Project list */}
+            <div>
+                {projects.map((project, index) => (
+                    <ProjectItem key={project.id} project={project} index={index} />
                 ))}
             </div>
-
-            {/* Bottom Red Accent Line */}
-            <div className="accent-line-red mt-16 dark:hidden" />
         </section>
     );
 }
