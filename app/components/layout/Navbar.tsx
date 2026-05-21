@@ -103,7 +103,7 @@ export default function Navbar() {
 
                     {/* Resume Link */}
                     <a
-                        href="/Vinayak_Agrawal_Resume.pdf"
+                        href="/001_Vinayak_Agrawal_Resume.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-accent border border-accent/30 rounded-full hover:bg-accent hover:text-background transition-all duration-300"

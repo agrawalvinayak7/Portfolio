@@ -90,7 +90,7 @@ export default function Contact() {
                         },
                         {
                             label: "Resume",
-                            href: "/Vinayak_Agrawal_Resume.pdf",
+                            href: "/001_Vinayak_Agrawal_Resume.pdf",
                             icon: <ArrowUpRight className="w-4 h-4" />,
                             desc: "Full background",
                         },
